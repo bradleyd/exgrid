@@ -3,17 +3,17 @@ defmodule ExGrid.HTTPHandler do
   Wrapper for all HTTP calls
   """
 
-  def request(client, method, url \\ payload) when method == :get do
-    response = HTTPotion.get(url, set_headers)
-    {_, body} =  parse_body(response.body)
-    { response.status_code, body }
-  end
+  #def request(client, method, url \\ payload) when method == :get do
+    #response = HTTPotion.get(url, set_headers)
+    #{_, body} =  parse_body(response.body)
+    #{ response.status_code, body }
+  #end
 
-  def request(client, method, url \\ payload) when method == :post do
-    response = HTTPotion.post(url, payload, set_headers, [])
-    {_, body} =  parse_body(response.body)
-    {response.status_code, body}
-  end
+  #def request(client, method, url \\ payload) when method == :post do
+    #response = HTTPotion.post(url, payload, set_headers, [])
+    #{_, body} =  parse_body(response.body)
+    #{response.status_code, body}
+  #end
 
   @doc """
   Performs GET request
