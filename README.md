@@ -10,6 +10,7 @@ Send an email
 * note api_user and api_key must contain those keys
 
 ```elixir
+creds   = ExGrid.credentials(%{api_key: key, api_user: user})
 message = ExGrid.Message.new(%{to: 'foo@example.com', subject: 'hello world', from: 'me@mysefandi.com'})
 
 {code, body} = ExGrid.Mail.send(creds, message)
