@@ -1,12 +1,16 @@
 defmodule ExGrid.MessageTest do
   use ExUnit.Case
 
-  test "message can be initiated from new" do
-    {:ok, foo } = ExGrid.Message.new(%{to: "foobar"})
-    assert foo.to == "foobar"
+  test "message will :error if missing all the defaults" do
+    {:error, _ } = ExGrid.Message.new(%{to: "foobar"})
   end
 
-  test "message return :error if missing attributes" do
-    assert {:error, msg,%ExGrid.Message{} } = ExGrid.Message.new(%{})
+  test "message return :error if empty Map" do
+    assert {:error, _ } = ExGrid.Message.new(%{})
   end
+
+  test "message return ok when built with minimum defaults" do
+    { :ok, msg } = ExGrid.Message.new(%{to: "foo", from: "me@mmyself.com", subject: "hello", text: "how are you?"})    
+  end
+  
 end

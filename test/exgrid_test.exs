@@ -10,7 +10,7 @@ defmodule ExGridTest do
   end
 
   test "returns ExGrid.credentials{}" do
-    assert %ExGrid{api_key: 'foo', api_user: 'me'} = ExGrid.credentials(%{api_key: 'foo', api_user: 'me'})
+    assert {:ok, %ExGrid{api_key: 'foo', api_user: 'me'} } = ExGrid.credentials(%{api_key: 'foo', api_user: 'me'})
   end
 
 end
