@@ -1,14 +1,20 @@
 defmodule ExGrid.Profile do
-  
-   alias ExGrid.HTTPHandler
+
+  alias ExGrid.HTTPHandler
 
 
-   def get(credentials) do
+  def get(credentials) do
     {code, body} = HTTPHandler.get(credentials, build_url("profile", "get", credentials))
-   end
-   
+  end
+
+  def set(credentials, profile_attributes) do
+    {code, body} = HTTPHandler.post(credentials, build_url("profile", "set"), build_form_data(credentials, profile_attributes))
+  end
+
   defp build_form_data(creds, message) do
-    full_message = Dict.merge(creds, message)
+    IO.inspect creds
+    IO.inspect message
+    full_message = Map.merge(creds, message)
     Enum.map(Map.to_list(full_message), fn {k,v} -> ("#{k}=#{v}") end ) |>
     Enum.join("&")
   end
@@ -33,6 +39,6 @@ defmodule ExGrid.Profile do
   end
 
 
- 
+
 end
 
