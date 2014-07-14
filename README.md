@@ -20,5 +20,18 @@ body #=> #HashDict<[{"message", "success"}]>
 `body` is a json return
 `code` is the HTTP response code
 
+#### Profile
+Get your profile
 
+```elixir
+{200, body } = ExGrid.Profile.get(creds)
+IO.inspect body #=>
+[#HashDict<[{"first_name", "John"}, {"username", "foo@fakedomain.com"}, {"website_access", "true"}, {"phone", "123456789"}, {"state", "CO"}, {"last_name", "Doe"}, {"address2", ""}, {"city", "Denver"}, {"email", "foo@fakedomain.com"}, {"website", "http://sendgrid.com"}, {"country", "US"}, {"active", "true"}, {"zip", "80020"}, {"address", "123 main st"}]>]
+```
+
+Set a profile attribute 
  
+```elixir
+{200, body} = ExGrid.Profile.set(creds, %{address: "456 Main st"})
+IO.inspect body #=> #HashDict<[{"message", "success"}]>
+```
