@@ -35,3 +35,14 @@ Set a profile attribute
 {200, body} = ExGrid.Profile.set(creds, %{address: "456 Main st"})
 IO.inspect body #=> #HashDict<[{"message", "success"}]>
 ```
+
+#### Bounces
+```elixir
+{200, body} = ExGrid.Bounces.get(creds)
+```
+
+```elixir
+# return the `created` time for each bounce
+{200, body} = ExGrid.Bounces.get(creds, %{date: 1})
+```
+

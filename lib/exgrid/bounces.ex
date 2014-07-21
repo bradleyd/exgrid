@@ -18,40 +18,34 @@ defmodule ExGrid.Bounces do
 
   `-1` == start date is 
 
-  Example:\r\n
+  ### Example:\r\n
   iex> ExGrid.Bounces.get(credentials, %{start_date: "2014-7-10", end_date: "2014-7-20"})\r\n
   """
   def get(credentials, %{start_date: start_date, end_date: end_date}) do
     {:ok, sdate, _} = DateFormat.parse(start_date,"{YYYY}-{M}-{D}")
     {:ok, edate, _} = DateFormat.parse(end_date,"{YYYY}-{M}-{D}")
-    cond do
-      1 == Date.compare(sdate, edate) ->
+    result = Date.compare(sdate, edate)
+    case result do
+      1 ->
         {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, %{start_date: start_date, end_date: end_date})))
-      0 == Date.compare(sdate, edate) ->
+      0 ->
         {:error, "Dates are the same"}
-      -1 == Date.compare(sdate, edate) ->
+      -1 ->
         {:error, "Start date is older than end date"}   
     end   
   end
 
-  def get(credentials, %{start_date: start_date}) do
+  def get(credentials, %{start_date: start_date}=sdate) do
     cond do
-      {:ok, sdate, _} = DateFormat.parse(start_date,"{YYYY}-{M}-{D}") ->
-        {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, %{start_date: start_date})))
-      {:error, sdate, "" } ==  DateFormat.parse(start_date,"{YYYY}-{M}-{D}") ->
+      {:ok, start_date, ""} = create_date_object(sdate.start_date) ->
+        {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, sdate)))
+      {:error, start_date, "" } ==  create_date_object(sdate.start_date) ->
         {:error, "Start date is older than end date"}   
     end 
   end
 
-  def get(credentials, optional_parameters) do
+  def get(credentials, optional_parameters) when is_map(optional_parameters) do
     {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, optional_parameters)))
-  end
-
-
-
-  defp build_form_data(creds) do
-    Enum.map(Map.to_list(creds), fn {k,v} -> ("#{k}=#{v}") end ) |>
-    Enum.join("&")
   end
 
   defp build_form_data(creds, message) do
@@ -60,6 +54,12 @@ defmodule ExGrid.Bounces do
     Enum.join("&")
   end
 
+  defp build_form_data(creds) do
+    Enum.map(Map.to_list(creds), fn {k,v} -> ("#{k}=#{v}") end ) |>
+    Enum.join("&")
+  end
+
+  
   defp build_url(context, verb) do
     "https://api.sendgrid.com/api/" <> context <> "." <> verb <> ".json?"
   end
@@ -68,7 +68,7 @@ defmodule ExGrid.Bounces do
     "https://api.sendgrid.com/api/" <> context <> "." <> verb <> ".json?" <> build_form_data(query_params)
   end
 
-  defp check_time(time1, time2) when is_bitstring(time1) do
-
+  defp create_date_object(date) do
+    {:ok, sdate, ""} = DateFormat.parse(date,"{YYYY}-{M}-{D}")
   end
 end
