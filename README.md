@@ -37,6 +37,8 @@ IO.inspect body #=> #HashDict<[{"message", "success"}]>
 ```
 
 #### Bounces
+[Please see docs for all parameters](https://sendgrid.com/docs/API_Reference/Web_API/bounces.html)
+ 
 ```elixir
 {200, body} = ExGrid.Bounces.get(creds)
 ```
@@ -45,4 +47,17 @@ IO.inspect body #=> #HashDict<[{"message", "success"}]>
 # return the `created` time for each bounce
 {200, body} = ExGrid.Bounces.get(creds, %{date: 1})
 ```
+
+remove bounces
+```elixir
+{200, body} = ExGrid.Bounces.remove(creds, %{type: "soft"}) 
+IO.inspect body #=> {"message", "success"}
+```
+
+```elixir
+{200, body} = ExGrid.Bounces.remove(creds, %{email: "foobarbazwoot@nowhereland.biz"}) 
+IO.inspect body #=> {"message", "success"}
+```
+
+
 

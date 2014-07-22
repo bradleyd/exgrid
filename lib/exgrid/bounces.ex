@@ -10,21 +10,22 @@ defmodule ExGrid.Bounces do
   end
 
   @doc """
-  get bounces between start and end date
+  get bounces with optional parameters
+  
+  * see [sendgrid api docs](https://sendgrid.com/docs/API_Reference/Web_API/bounces.html)
 
-  `1` == start date is before end date
-
-  `0` == dates are the same
-
-  `-1` == start date is 
+  * note for `start_date` and `end_date` they must be in `YYYY-M-D` string format
 
   ### Example:\r\n
   iex> ExGrid.Bounces.get(credentials, %{start_date: "2014-7-10", end_date: "2014-7-20"})\r\n
+  iex> ExGrid.Bounces.get(credentials, %{date: "1"})\r\n
+  iex> ExGrid.Bounces.get(credentials, %{date: 1, limit: 1})\r\n
+  
   """
   def get(credentials, %{start_date: start_date, end_date: end_date}) do
-    {:ok, sdate, _} = DateFormat.parse(start_date,"{YYYY}-{M}-{D}")
-    {:ok, edate, _} = DateFormat.parse(end_date,"{YYYY}-{M}-{D}")
-    result = Date.compare(sdate, edate)
+    {:ok, sdate, _} = create_date_object(start_date)
+    {:ok, edate, _} = create_date_object(end_date)
+    result = comapre_dates(sdate, edate)
     case result do
       1 ->
         {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, %{start_date: start_date, end_date: end_date})))
@@ -48,6 +49,10 @@ defmodule ExGrid.Bounces do
     {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, optional_parameters)))
   end
 
+  def remove(credentials, optional_parameters) when is_map(optional_parameters) do
+    {code, body} = HTTPHandler.post(credentials, build_url("bounces", "delete"), build_form_data(credentials, optional_parameters))
+  end
+
   defp build_form_data(creds, message) do
     full_message = Map.merge(creds, message)
     Enum.map(Map.to_list(full_message), fn {k,v} -> ("#{k}=#{v}") end ) |>
@@ -68,7 +73,15 @@ defmodule ExGrid.Bounces do
     "https://api.sendgrid.com/api/" <> context <> "." <> verb <> ".json?" <> build_form_data(query_params)
   end
 
-  defp create_date_object(date) do
-    {:ok, sdate, ""} = DateFormat.parse(date,"{YYYY}-{M}-{D}")
+  # uses YYYY-M-D format by defaault
+  defp create_date_object(date, format \\ "{YYYY}-{M}-{D}") do
+    {:ok, sdate, ""} = DateFormat.parse(date, format)
+  end
+
+  #`1` == start date is before end date
+  #`0` == dates are the same
+  #`-1` == start date is 
+  defp comapre_dates(first_date, second_date) do
+    Date.compare(first_date, second_date)
   end
 end

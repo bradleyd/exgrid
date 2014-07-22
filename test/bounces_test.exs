@@ -59,11 +59,11 @@ defmodule ExGrid.BouncesTest do
     assert {:error, "Start date is older than end date"} = ExGrid.Bounces.get(creds, %{start_date: "2014-07-20", end_date: "2013-09-10"})
   end
 
-  #test "remove bounce" do
-    #{ :ok, creds } = ExGrid.credentials(%{api_key: System.get_env("API_KEY"), api_user: System.get_env("API_USER")})
-    #{200, body} = ExGrid.Bounces.remove(creds, %{address: "456 Main st"})
-    #assert { "success", _ }  == HashDict.pop(body, "message")
-  #end
+  test "remove bounce" do
+    { :ok, creds } = ExGrid.credentials(%{api_key: System.get_env("API_KEY"), api_user: System.get_env("API_USER")})
+    {200, body} = ExGrid.Bounces.remove(creds, %{type: "soft"})
+    assert {"message", "success"} == Enum.at(body,0)
+  end
   
   
 end
