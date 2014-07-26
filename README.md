@@ -37,6 +37,7 @@ IO.inspect body #=> #HashDict<[{"message", "success"}]>
 ```
 
 #### Bounces
+
 [Please see docs for all parameters](https://sendgrid.com/docs/API_Reference/Web_API/bounces.html)
  
 ```elixir
@@ -64,6 +65,34 @@ You can even get bounce counts
 
 ```elixir
 {200, body} = ExGrid.Bounces.count(creds)
+IO.inspect body #=> {"count", "4"}
+```
+
+#### Blocks
+[Please see docs for all parameters](https://sendgrid.com/docs/API_Reference/Web_API/blocks.html)
+ 
+```elixir
+{200, body} = ExGrid.Blocks.get(creds)
+```
+
+```elixir
+# return the `created` time for each block
+{200, body} = ExGrid.Blocks.get(creds, %{date: 1})
+```
+
+remove blocks
+
+* only parameter accepted is `email`
+
+```elixir
+{200, body} = ExGrid.Blocks.remove(creds, %{email: "foobarbazwoot@nowhereland.biz"}) 
+IO.inspect body #=> {"message", "success"}
+```
+
+You can even get block counts
+
+```elixir
+{200, body} = ExGrid.Blocks.count(creds)
 IO.inspect body #=> {"count", "4"}
 ```
 
