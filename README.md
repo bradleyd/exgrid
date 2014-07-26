@@ -132,6 +132,11 @@ Number of days in the past to include statistics (Includes today)
 {200, body} = ExGrid.Statistics.get(creds, %{days: 1})
 ```
 
+List all categories
+```elixir
+{200, body} = ExGrid.Statistics.categories(creds)
+```
+
 You can even get aggregate stats
 
 ```elixir
