@@ -49,6 +49,7 @@ IO.inspect body #=> #HashDict<[{"message", "success"}]>
 ```
 
 remove bounces
+
 ```elixir
 {200, body} = ExGrid.Bounces.remove(creds, %{type: "soft"}) 
 IO.inspect body #=> {"message", "success"}
@@ -59,5 +60,10 @@ IO.inspect body #=> {"message", "success"}
 IO.inspect body #=> {"message", "success"}
 ```
 
+You can even get bounce counts
 
+```elixir
+{200, body} = ExGrid.Bounces.count(creds)
+IO.inspect body #=> {"count", "4"}
+```
 

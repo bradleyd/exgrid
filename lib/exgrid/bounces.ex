@@ -2,8 +2,12 @@ defmodule ExGrid.Bounces do
   use Timex
   alias ExGrid.HTTPHandler
 
+  @moduledoc """
+  Manage bounces
+  """
+
   @doc """
-  get bounces
+  get all bounces
   """
   def get(credentials) do
     {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials))
@@ -16,7 +20,8 @@ defmodule ExGrid.Bounces do
 
   * note for `start_date` and `end_date` they must be in `YYYY-M-D` string format
 
-  ### Example:\r\n
+  ### Examples:
+
   iex> ExGrid.Bounces.get(credentials, %{start_date: "2014-7-10", end_date: "2014-7-20"})\r\n
   iex> ExGrid.Bounces.get(credentials, %{date: "1"})\r\n
   iex> ExGrid.Bounces.get(credentials, %{date: 1, limit: 1})\r\n
@@ -49,6 +54,22 @@ defmodule ExGrid.Bounces do
     {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, optional_parameters)))
   end
 
+  @doc """
+  get bounce count
+  """
+  def count(credentials) do
+    {code, body} = HTTPHandler.get(credentials, build_url("bounces", "count", credentials))
+  end
+
+  @doc """
+  Remove a bounce
+
+  ### Examples
+
+  iex> ExGrid.Bounces.remove(credentials, %{email: "foobar@baz.com"})
+
+  iex> ExGrid.Bounces.remove(credentials, %{type: "soft"})
+  """
   def remove(credentials, optional_parameters) when is_map(optional_parameters) do
     {code, body} = HTTPHandler.post(credentials, build_url("bounces", "delete"), build_form_data(credentials, optional_parameters))
   end
@@ -64,7 +85,6 @@ defmodule ExGrid.Bounces do
     Enum.join("&")
   end
 
-  
   defp build_url(context, verb) do
     "https://api.sendgrid.com/api/" <> context <> "." <> verb <> ".json?"
   end
