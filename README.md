@@ -3,6 +3,8 @@ ExGrid
 
 Elixir library to interact with Sendgrid's REST API
 
+### This is a WIP, YMMV
+
 ## Usage
 
 Send an email
@@ -94,5 +96,45 @@ You can even get block counts
 ```elixir
 {200, body} = ExGrid.Blocks.count(creds)
 IO.inspect body #=> {"count", "4"}
+```
+
+#### Statistics
+[Please see docs for all parameters](https://sendgrid.com/docs/API_Reference/Web_API/Statistics.html)
+ 
+```elixir
+{200, body} = ExGrid.Statistics.get(creds)
+IO.inspect body #=>
+HashDict<[
+[
+   {
+      "date": "2014-02-26",
+      "delivered": 314,
+      "unsubscribes": 1,
+      "invalid_email": 5,
+      "bounces": 9,
+      "repeat_unsubscribes": 2,
+      "unique_clicks": 65,
+      "blocked": 3,
+      "spam_drop": 5,
+      "repeat_bounces": 8,
+      "repeat_spamreports": 9,
+      "requests": 350,
+      "spamreports": 1,
+      "clicks": 78,
+      "opens": 80,
+      "unique_opens": 70
+]>
+
+```
+
+Number of days in the past to include statistics (Includes today)
+```elixir
+{200, body} = ExGrid.Statistics.get(creds, %{days: 1})
+```
+
+You can even get aggregate stats
+
+```elixir
+{200, body} = ExGrid.Statistics.get(creds, %{aggregate: 1})
 ```
 
