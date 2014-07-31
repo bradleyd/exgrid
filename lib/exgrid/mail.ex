@@ -8,7 +8,7 @@ defmodule ExGrid.Mail do
   end
 
   defp build_form_data(creds, message) do
-    full_message = Dict.merge(creds, message)
+    full_message = Map.merge(creds, message)
     Enum.map(Map.to_list(full_message), fn {k,v} -> ("#{k}=#{v}") end ) |>
     Enum.join("&")
   end
