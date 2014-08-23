@@ -13,7 +13,7 @@ Send an email
 
 ```elixir
 { :ok, creds } = ExGrid.credentials(%{api_key: key, api_user: user})
-{ :ok, message } = ExGrid.Message.new(%{to: 'foo@example.com', subject: 'hello world', from: 'me@mysefandi.com'})
+{ :ok, message } = ExGrid.Message.new([to: 'foo@example.com', subject: 'hello world', from: 'me@mysefandi.com'])
 
 {code, body} = ExGrid.Mail.send(creds, message)
 code #=> 200

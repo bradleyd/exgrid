@@ -1,46 +1,65 @@
 defmodule ExGrid.Message do
-  defstruct to: nil, subject: nil, text: nil, html: nil, from: nil, bcc: nil
+  defstruct to: nil, subject: nil, text: nil, html: nil, from: nil, bcc: nil, files: nil
+
+  @moduledoc """
+  Create a Message map
+  
+  ## Examples
+
+  iex> {:ok, message} = ExGrid.Message.new([to: "foo", from: "me@myself.com", subject: "hello", text: "how are you?"])   
+  """
 
   @doc """
-  this is the minimum needed to send an email
-  """
-  def new(%{to: to, subject: subject, text: text, from: from})  do
-    {:ok, %ExGrid.Message{to: to, subject: subject, text: text, from: from} }
-  end
+  Creates a message.
   
-  def new(%{to: to, subject: subject, html: html, from: from})  do
-    {:ok, %ExGrid.Message{to: to, subject: subject, html: html, from: from} }
-  end
+  The minimum needed to send an email
 
-  def new(message) when message == %{} do
-    {:error, "Missing attributes"}
-  end
+  [to: "foo", from: "me@myself.com", subject: "hello", text: "how are you?"]
 
-  def new(message) when is_map(message) do
-    case validate_message(message) do
-      { :ok, _ } ->
-        { :ok, Map.merge(%ExGrid.Message{}, message) }
-      { :error, error_message} ->
-        { :error, error_message }
-    end
-  end
 
+  When adding attachments, they must be in this form files[file1.jpg]=file1.jpg
+  """
   def new() do
     {:error, "need attrbiutes to send a message"}
   end
 
-  defp validate_message(msg) do
-    case msg do
-     %{ to: _, subject: _, text: _, from: _, bcc: _} ->
-       { :ok, msg }
-     %{ to: _, subject: _, html: _, from: _, bcc: _} ->
-       { :ok, msg }
-     %{ to: _, subject: _, html: _, from: _} ->
-       { :ok, msg }
-     _ ->
-       { :error, "missing default attributes to send message" }
-    end
+  def new([]) do
+    {:error, "Missing attributes"}
   end
-  
+
+  def new(opts)  do
+    to = Keyword.fetch!(opts, :to)
+    from = Keyword.fetch!(opts, :from)
+    subject = Keyword.fetch!(opts, :subject)
+    text = Keyword.fetch!(opts, :text)
+    {:ok, %ExGrid.Message{to: to, subject: subject, text: text, from: from} }
+  end
+
+  def new(opts)  do
+    to = Keyword.fetch!(opts, :to)
+    from = Keyword.fetch!(opts, :from)
+    subject = Keyword.fetch!(opts, :subject)
+    html = Keyword.fetch!(opts, :html)
+    {:ok, %ExGrid.Message{to: to, subject: subject, html: html, from: from} }
+  end
+
+  def new(opts)  do
+    to = Keyword.fetch!(opts, :to)
+    from = Keyword.fetch!(opts, :from)
+    subject = Keyword.fetch!(opts, :subject)
+    html = Keyword.fetch!(opts, :html)
+    text = Keyword.fetch!(opts, :text)
+    {:ok, %ExGrid.Message{to: to, subject: subject, text: text, html: html, from: from} }
+  end
+
+  def new(opts)  do
+    to = Keyword.fetch!(opts, :to)
+    from = Keyword.fetch!(opts, :from)
+    subject = Keyword.fetch!(opts, :subject)
+    html = Keyword.get(opts, :html)
+    text = Keyword.get(opts, :text)
+    files = Keyword.fetch!(opts, :file)
+    {:ok, %ExGrid.Message{to: to, subject: subject, text: text, html: html, from: from, files: files} }
+  end
 
 end
