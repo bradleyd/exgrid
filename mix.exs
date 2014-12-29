@@ -4,7 +4,7 @@ defmodule ExGrid.Mixfile do
   def project do
     [app: :exgrid,
      version: "0.1.0",
-     elixir: "~> 1.0",
+     elixir: "~> 1.0.2",
      deps: deps]
   end
 
