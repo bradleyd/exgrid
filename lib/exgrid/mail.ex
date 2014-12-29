@@ -53,6 +53,11 @@ defmodule ExGrid.Mail do
 
   defp split_email(full_email) do
     [_, name, email] = Regex.run(~r/^([^<]*?)\s*?<([^>]*)>/, full_email) || [nil, nil, full_email]
-    {name, email}
+    {cleanup_name(name), email}
+  end
+
+  defp cleanup_name(nil), do: nil
+  defp cleanup_name(name) do
+    name |> String.strip ?"
   end
 end
