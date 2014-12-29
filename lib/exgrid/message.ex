@@ -35,31 +35,31 @@ defmodule ExGrid.Message do
     {:ok, %ExGrid.Message{to: to, subject: subject, text: text, from: from} }
   end
 
-  def new(opts)  do
-    to = Keyword.fetch!(opts, :to)
-    from = Keyword.fetch!(opts, :from)
-    subject = Keyword.fetch!(opts, :subject)
-    html = Keyword.fetch!(opts, :html)
-    {:ok, %ExGrid.Message{to: to, subject: subject, html: html, from: from} }
-  end
+  # def new(opts)  do
+  #   to = Keyword.fetch!(opts, :to)
+  #   from = Keyword.fetch!(opts, :from)
+  #   subject = Keyword.fetch!(opts, :subject)
+  #   html = Keyword.fetch!(opts, :html)
+  #   {:ok, %ExGrid.Message{to: to, subject: subject, html: html, from: from} }
+  # end
 
-  def new(opts)  do
-    to = Keyword.fetch!(opts, :to)
-    from = Keyword.fetch!(opts, :from)
-    subject = Keyword.fetch!(opts, :subject)
-    html = Keyword.fetch!(opts, :html)
-    text = Keyword.fetch!(opts, :text)
-    {:ok, %ExGrid.Message{to: to, subject: subject, text: text, html: html, from: from} }
-  end
+  # def new(opts)  do
+  #   to = Keyword.fetch!(opts, :to)
+  #   from = Keyword.fetch!(opts, :from)
+  #   subject = Keyword.fetch!(opts, :subject)
+  #   html = Keyword.fetch!(opts, :html)
+  #   text = Keyword.fetch!(opts, :text)
+  #   {:ok, %ExGrid.Message{to: to, subject: subject, text: text, html: html, from: from} }
+  # end
 
-  def new(opts)  do
-    to = Keyword.fetch!(opts, :to)
-    from = Keyword.fetch!(opts, :from)
-    subject = Keyword.fetch!(opts, :subject)
-    html = Keyword.get(opts, :html)
-    text = Keyword.get(opts, :text)
-    files = Keyword.fetch!(opts, :file)
-    {:ok, %ExGrid.Message{to: to, subject: subject, text: text, html: html, from: from, files: files} }
-  end
+  # def new(opts)  do
+  #   to = Keyword.fetch!(opts, :to)
+  #   from = Keyword.fetch!(opts, :from)
+  #   subject = Keyword.fetch!(opts, :subject)
+  #   html = Keyword.get(opts, :html)
+  #   text = Keyword.get(opts, :text)
+  #   files = Keyword.fetch!(opts, :file)
+  #   {:ok, %ExGrid.Message{to: to, subject: subject, text: text, html: html, from: from, files: files} }
+  # end
 
 end

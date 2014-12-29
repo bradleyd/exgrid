@@ -4,7 +4,7 @@ defmodule ExGrid.Profile do
 
 
   def get(credentials) do
-    {code, body} = HTTPHandler.get(credentials, build_url("profile", "get", credentials))
+    {_code, _body} = HTTPHandler.get(credentials, build_url("profile", "get", credentials))
   end
 
   @doc """
@@ -30,7 +30,7 @@ defmodule ExGrid.Profile do
   { 200, #HashDict<[{"message", "success"}]>}
   """
   def set(credentials, profile_attributes) do
-    {code, body} = HTTPHandler.post(credentials, build_url("profile", "set"), build_form_data(credentials, profile_attributes))
+    {_code, _body} = HTTPHandler.post(credentials, build_url("profile", "set"), build_form_data(credentials, profile_attributes))
   end
 
   defp build_form_data(creds, message) do

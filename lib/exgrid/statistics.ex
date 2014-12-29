@@ -10,14 +10,14 @@ defmodule ExGrid.Statistics do
   get all stats
   """
   def get(credentials) do
-    {code, body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials))
+    {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials))
   end
   
   @doc """
   get all categories
   """
   def categories(credentials) do
-    {code, body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{list: true}))
+    {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{list: true}))
   end
 
 
@@ -41,7 +41,7 @@ defmodule ExGrid.Statistics do
     result = comapre_dates(sdate, edate)
     case result do
       1 ->
-        {code, body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{start_date: start_date, end_date: end_date}))
+        {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{start_date: start_date, end_date: end_date}))
       0 ->
         {:error, "Dates are the same"}
       -1 ->
@@ -49,17 +49,17 @@ defmodule ExGrid.Statistics do
     end   
   end
 
-  def get(credentials, %{start_date: start_date}=sdate) do
+  def get(credentials, %{start_date: _start_date}=sdate) do
     cond do
-      {:ok, start_date, ""} = create_date_object(sdate.start_date) ->
-        {code, body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, sdate))
-      {:error, start_date, "" } ==  create_date_object(sdate.start_date) ->
+      {:ok, _start_date, ""} = create_date_object(sdate.start_date) ->
+        {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, sdate))
+      {:error, _start_date, "" } =  create_date_object(sdate.start_date) ->
         {:error, "Start date is older than end date"}   
     end 
   end
 
   def get(credentials, optional_parameters) when is_map(optional_parameters) do
-    {code, body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, optional_parameters))
+    {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, optional_parameters))
   end
 
   defp build_form_data(creds, message) do
@@ -77,13 +77,9 @@ defmodule ExGrid.Statistics do
     "https://api.sendgrid.com/api/" <> context <> "." <> verb <> ".json?"
   end
 
-  defp build_url(context, verb, query_params) do
-    "https://api.sendgrid.com/api/" <> context <> "." <> verb <> ".json?" <> build_form_data(query_params)
-  end
-
   # uses YYYY-M-D format by defaault
   defp create_date_object(date, format \\ "{YYYY}-{M}-{D}") do
-    {:ok, sdate, ""} = DateFormat.parse(date, format)
+    {:ok, _sdate, ""} = DateFormat.parse(date, format)
   end
 
   #`1` == start date is before end date

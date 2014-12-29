@@ -10,7 +10,7 @@ defmodule ExGrid do
     { :ok, %ExGrid{api_key: key, api_user: user} }
   end
 
-  def credentials(something) do
+  def credentials(_) do
     {:error}
   end
 end

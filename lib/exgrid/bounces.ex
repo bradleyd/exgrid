@@ -10,7 +10,7 @@ defmodule ExGrid.Bounces do
   get all bounces
   """
   def get(credentials) do
-    {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials))
+    {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials))
   end
 
   @doc """
@@ -33,7 +33,7 @@ defmodule ExGrid.Bounces do
     result = comapre_dates(sdate, edate)
     case result do
       1 ->
-        {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, %{start_date: start_date, end_date: end_date})))
+        {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, %{start_date: start_date, end_date: end_date})))
       0 ->
         {:error, "Dates are the same"}
       -1 ->
@@ -41,24 +41,24 @@ defmodule ExGrid.Bounces do
     end   
   end
 
-  def get(credentials, %{start_date: start_date}=sdate) do
+  def get(credentials, %{start_date: _start_date}=sdate) do
     cond do
-      {:ok, start_date, ""} = create_date_object(sdate.start_date) ->
-        {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, sdate)))
-      {:error, start_date, "" } ==  create_date_object(sdate.start_date) ->
+      {:ok, _start_date, ""} = create_date_object(sdate.start_date) ->
+        {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, sdate)))
+      {:error, _start_date, "" } =  create_date_object(sdate.start_date) ->
         {:error, "Start date is older than end date"}   
     end 
   end
 
   def get(credentials, optional_parameters) when is_map(optional_parameters) do
-    {code, body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, optional_parameters)))
+    {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, optional_parameters)))
   end
 
   @doc """
   get bounce count
   """
   def count(credentials) do
-    {code, body} = HTTPHandler.get(credentials, build_url("bounces", "count", credentials))
+    {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "count", credentials))
   end
 
   @doc """
@@ -71,7 +71,7 @@ defmodule ExGrid.Bounces do
   iex> ExGrid.Bounces.remove(credentials, %{type: "soft"})
   """
   def remove(credentials, optional_parameters) when is_map(optional_parameters) do
-    {code, body} = HTTPHandler.post(credentials, build_url("bounces", "delete"), build_form_data(credentials, optional_parameters))
+    {_code, _body} = HTTPHandler.post(credentials, build_url("bounces", "delete"), build_form_data(credentials, optional_parameters))
   end
 
   defp build_form_data(creds, message) do
@@ -95,7 +95,7 @@ defmodule ExGrid.Bounces do
 
   # uses YYYY-M-D format by defaault
   defp create_date_object(date, format \\ "{YYYY}-{M}-{D}") do
-    {:ok, sdate, ""} = DateFormat.parse(date, format)
+    {:ok, _sdate, ""} = DateFormat.parse(date, format)
   end
 
   #`1` == start date is before end date

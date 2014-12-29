@@ -4,7 +4,7 @@ defmodule ExGrid.Mail do
 
 
   def send(creds, message) do
-    {_, _} = HTTPHandler.post(creds, url, build_form_data(creds, message))
+    {_code, _body} = HTTPHandler.post(creds, url, build_form_data(creds, message))
   end
 
   defp build_form_data(%ExGrid{} = creds, %ExGrid.Message{} = message) do

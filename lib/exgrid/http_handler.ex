@@ -18,7 +18,8 @@ defmodule ExGrid.HTTPHandler do
   @doc """
   Performs GET request
   """
-  def get(client, url) do
+  def get(_, url), do: get(url)
+  def get(url) do
     response = HTTPotion.get(url, set_headers)
     {_, body} =  parse_body(response.body)
     { response.status_code, body }
@@ -27,7 +28,8 @@ defmodule ExGrid.HTTPHandler do
   @doc """
   Performs POST request
   """
-  def post(client, url, payload) do
+  def post(_, url, payload), do: post(url, payload)
+  def post(url, payload) do
     response = HTTPotion.post(url, payload, set_headers, [])
     {_, body} =  parse_body(response.body)
     {response.status_code, body}
