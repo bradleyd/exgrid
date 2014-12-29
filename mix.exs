@@ -25,8 +25,8 @@ defmodule ExGrid.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [ {:httpotion, git: "https://github.com/myfreeweb/httpotion.git"},
-      {:json, github: "cblage/elixir-json"},
+    [ {:httpotion, "~> 1.0.0"},
+      {:json, "~> 0.3.2"},
       {:timex, "~> 0.13.2"}
     ]
   end
