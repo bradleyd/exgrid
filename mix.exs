@@ -25,7 +25,8 @@ defmodule ExGrid.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [ {:httpotion, "~> 1.0.0"},
+    [ {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.0"},
+      {:httpotion, "~> 1.0.0"},
       {:json, "~> 0.3.2"},
       {:timex, "~> 0.13.2"}
     ]
