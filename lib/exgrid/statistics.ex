@@ -61,19 +61,4 @@ defmodule ExGrid.Statistics do
   def get(credentials, optional_parameters) when is_map(optional_parameters) do
     {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, optional_parameters))
   end
-
-  defp build_form_data(creds, message) do
-    full_message = Map.merge(creds, message)
-    Enum.map(Map.to_list(full_message), fn {k,v} -> ("#{k}=#{v}") end ) |>
-    Enum.join("&")
-  end
-
-  defp build_form_data(creds) do
-    Enum.map(Map.to_list(creds), fn {k,v} -> ("#{k}=#{v}") end ) |>
-    Enum.join("&")
-  end
-
-  defp build_url(context, verb) do
-    "https://api.sendgrid.com/api/" <> context <> "." <> verb <> ".json?"
-  end
 end
