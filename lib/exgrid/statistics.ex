@@ -1,5 +1,5 @@
 defmodule ExGrid.Statistics do
-  use Timex
+  import ExGrid.Util
   alias ExGrid.HTTPHandler
 
   @moduledoc """
@@ -36,9 +36,9 @@ defmodule ExGrid.Statistics do
   
   """
   def get(credentials, %{start_date: start_date, end_date: end_date}) do
-    {:ok, sdate, _} = create_date_object(start_date)
-    {:ok, edate, _} = create_date_object(end_date)
-    result = comapre_dates(sdate, edate)
+    {:ok, sdate} = parse_date(start_date)
+    {:ok, edate} = parse_date(end_date)
+    result = compare_dates(sdate, edate)
     case result do
       1 ->
         {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{start_date: start_date, end_date: end_date}))
@@ -51,9 +51,9 @@ defmodule ExGrid.Statistics do
 
   def get(credentials, %{start_date: _start_date}=sdate) do
     cond do
-      {:ok, _start_date, ""} = create_date_object(sdate.start_date) ->
+      {:ok, _start_date} = parse_date(sdate.start_date) ->
         {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, sdate))
-      {:error, _start_date, "" } =  create_date_object(sdate.start_date) ->
+      {:error, _start_date} =  parse_date(sdate.start_date) ->
         {:error, "Start date is older than end date"}   
     end 
   end
@@ -75,17 +75,5 @@ defmodule ExGrid.Statistics do
 
   defp build_url(context, verb) do
     "https://api.sendgrid.com/api/" <> context <> "." <> verb <> ".json?"
-  end
-
-  # uses YYYY-M-D format by defaault
-  defp create_date_object(date, format \\ "{YYYY}-{M}-{D}") do
-    {:ok, _sdate, ""} = DateFormat.parse(date, format)
-  end
-
-  #`1` == start date is before end date
-  #`0` == dates are the same
-  #`-1` == start date is 
-  defp comapre_dates(first_date, second_date) do
-    Date.compare(first_date, second_date)
   end
 end
