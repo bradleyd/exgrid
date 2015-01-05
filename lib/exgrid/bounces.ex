@@ -34,7 +34,7 @@ defmodule ExGrid.Bounces do
     result = compare_dates(sdate, edate)
     case result do
       -1 ->
-        {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, %{start_date: start_date, end_date: end_date})))
+        {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials, %{start_date: start_date, end_date: end_date}))
       0 ->
         {:error, "Dates are the same"}
       1 ->
@@ -45,14 +45,14 @@ defmodule ExGrid.Bounces do
   def get(credentials, %{start_date: _start_date}=sdate) do
     cond do
       {:ok, _start_date} = parse_date(sdate.start_date) ->
-        {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, sdate)))
+        {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials, sdate))
       {:error, _start_date} =  parse_date(sdate.start_date) ->
         {:error, "Start date is older than end date"}   
     end 
   end
 
   def get(credentials, optional_parameters) when is_map(optional_parameters) do
-    {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", Map.merge(credentials, optional_parameters)))
+    {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials, optional_parameters))
   end
 
   @doc """
