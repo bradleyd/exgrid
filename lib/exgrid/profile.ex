@@ -1,7 +1,6 @@
 defmodule ExGrid.Profile do
-  import ExGrid.Util
+  import ExGrid.API
   alias ExGrid.HTTPHandler
-
 
   def get(credentials) do
     {_code, _body} = HTTPHandler.get(credentials, build_url("profile", "get", credentials))

@@ -1,5 +1,6 @@
 defmodule ExGrid.Bounces do
-  import ExGrid.Util
+  import ExGrid.Date
+  import ExGrid.API
   alias ExGrid.HTTPHandler
 
   @moduledoc """
