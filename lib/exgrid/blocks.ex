@@ -32,11 +32,11 @@ defmodule ExGrid.Blocks do
     {:ok, edate} = parse_date(end_date)
     result = compare_dates(sdate, edate)
     case result do
-      1 ->
+      -1 ->
         {_code, _body} = HTTPHandler.get(credentials, build_url("blocks", "get", Map.merge(credentials, %{start_date: start_date, end_date: end_date})))
       0 ->
         {:error, "Dates are the same"}
-      -1 ->
+      1 ->
         {:error, "Start date is older than end date"}   
     end   
   end
