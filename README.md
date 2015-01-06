@@ -1,6 +1,8 @@
 ExGrid
 ======
 
+[![Build Status](https://travis-ci.org/bradleyd/exgrid.svg?branch=master)](https://travis-ci.org/bradleyd/exgrid)
+
 Elixir library to interact with Sendgrid's REST API
 
 ### This is a WIP, YMMV
