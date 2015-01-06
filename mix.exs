@@ -3,8 +3,8 @@ defmodule ExGrid.Mixfile do
 
   def project do
     [app: :exgrid,
-     version: "0.1.0",
-     elixir: "~> 0.14.1",
+     version: "0.2.3",
+     elixir: "~> 1.0.2",
      deps: deps]
   end
 
@@ -25,9 +25,10 @@ defmodule ExGrid.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [ {:httpotion, git: "https://github.com/myfreeweb/httpotion.git"},
-      {:json, github: "cblage/elixir-json"},
-      {:timex, "~> 0.10.1"}
+    [ {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.0"},
+      {:httpotion, "~> 1.0.0"},
+      {:json, "~> 0.3.2"},
+      {:timex, "~> 0.13.2"}
     ]
   end
 end
