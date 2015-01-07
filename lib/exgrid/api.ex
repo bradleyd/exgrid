@@ -21,11 +21,11 @@ defmodule ExGrid.API do
   def build_form_data(%ExGrid{} = creds, params) do
     build_form_data(Map.from_struct(creds), params)
   end
-  def build_form_data(%ExGrid{} = creds) do
-    build_form_data(Map.from_struct(creds))
-  end
   def build_form_data(creds, params) do
     build_form_data Map.merge(creds, params)
+  end
+  def build_form_data(%ExGrid{} = creds) do
+    build_form_data(Map.from_struct(creds))
   end
   def build_form_data(args) do
     Enum.map(Map.to_list(args), fn {k,v} -> encode_attribute(k, v) end)
