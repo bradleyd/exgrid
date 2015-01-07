@@ -145,3 +145,9 @@ You can even get aggregate stats
 {200, body} = ExGrid.Statistics.get(creds, %{aggregate: 1})
 ```
 
+### Tests
+You must supply your credentials as environment vars to run tests.
+
+```bash
+API_KEY="secret" API_USER="foo@example.com" mix test test
+```
