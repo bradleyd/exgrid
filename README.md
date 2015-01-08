@@ -1,7 +1,7 @@
 ExGrid
 ======
 
-[![Build Status](https://travis-ci.org/bradleyd/exgrid.svg?branch=master)](https://travis-ci.org/bradleyd/exgrid) [![Hex pm](http://img.shields.io/hexpm/v/exgrid.svg)](https://hex.pm/packages/exgrid)
+[![Build Status](https://travis-ci.org/bradleyd/exgrid.svg?branch=master)](https://travis-ci.org/bradleyd/exgrid) [![Hex.pm](http://img.shields.io/hexpm/v/exgrid.svg)](https://hex.pm/packages/exgrid)
 
 
 Elixir library to interact with Sendgrid's REST API
