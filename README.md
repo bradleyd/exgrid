@@ -7,6 +7,20 @@ Elixir library to interact with Sendgrid's REST API
 
 ### This is a WIP, YMMV
 
+## Installation
+Hex does not include git repo's from mix, so you will have to add ibrowse to your deps.
+
+In order to install it via hex, add `exgrid` and `ibrowse` package into the deps list of your mix.exs.
+
+```elixir
+  defp deps do
+    [
+      {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.0"},
+      {:exgrid, "~> 0.2.3"}
+    ]
+  end
+```
+
 ## Usage
 
 Send an email
