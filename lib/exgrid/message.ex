@@ -1,5 +1,5 @@
 defmodule ExGrid.Message do
-  defstruct to: nil, subject: nil, text: nil, html: nil, from: nil, bcc: nil, files: nil
+  defstruct to: nil, from: nil, subject: nil, replyto: nil, bcc: nil, text: nil, html: nil, files: nil
 
   @moduledoc """
   Create a Message map
@@ -32,12 +32,21 @@ defmodule ExGrid.Message do
     from = Keyword.fetch!(opts, :from)
     subject = Keyword.fetch!(opts, :subject)
 
+    replyto = Keyword.get(opts, :replyto)
     text = Keyword.get(opts, :text)
     html = Keyword.get(opts, :html)
     files = Keyword.get(opts, :files)
 
     cond do
-      (text || html) -> {:ok, %ExGrid.Message{to: to, from: from, subject: subject, text: text, html: html, files: files} }
+      (text || html) -> {:ok, %ExGrid.Message{
+        to: to,
+        from: from,
+        subject: subject,
+        replyto: replyto,
+        text: text,
+        html: html,
+        files: files
+      }}
       true -> {:error, "Missing attribute: text or html"}
     end
   end
