@@ -12,8 +12,9 @@ defmodule ExGrid.MessageTest do
   end
 
   test "message return ok when built with minimum defaults" do
-    {:ok, msg} = ExGrid.Message.new([to: "foo", from: "me@myself.com", subject: "hello", text: "how are you?"])
+    {:ok, msg} = ExGrid.Message.new([to: "foo", replyto: "foo@example.com", from: "me@myself.com", subject: "hello", text: "how are you?"])
     assert msg.to == "foo"
+    assert msg.replyto == "foo@example.com"
     assert msg.from == "me@myself.com"
   end
 end
