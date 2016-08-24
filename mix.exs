@@ -18,7 +18,7 @@ defmodule ExGrid.Mixfile do
   end
 
   defp deps do
-    [ {:ibrowse, tag: "~> 4.2"},
+    [ {:ibrowse, "~> 4.2"},
       {:httpotion, "~> 1.0.0"},
       {:json, "~> 0.3.2"},
       {:timex, "~> 2.2"}
