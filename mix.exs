@@ -18,7 +18,9 @@ defmodule ExGrid.Mixfile do
   end
 
   defp deps do
-    [ {:ibrowse, "~> 4.2"},
+    [
+      {:ex_doc, "~> 0.12", only: :dev},
+      {:ibrowse, "~> 4.2"},
       {:httpotion, "~> 1.0.0"},
       {:json, "~> 0.3.2"},
       {:timex, "~> 2.2"}
@@ -31,6 +33,7 @@ defmodule ExGrid.Mixfile do
 
   def package do
     [
+      maintainers: ["Bradley Smith"],
       contributors: ["Bradley Smith"],
       licenses: ["The MIT License"],
       links: %{
