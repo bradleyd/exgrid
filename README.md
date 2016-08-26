@@ -28,8 +28,8 @@ Send an email
 * note api_user and api_key must contain those keys or you will get a match error
 
 ```elixir
-{ :ok, creds } = ExGrid.credentials(%{api_key: key, api_user: user})
-{ :ok, message } = ExGrid.Message.new([to: "foo@example.com", subject: "hello world", from: "me@mysefandi.com"])
+{ :ok, creds } = ExGrid.credentials(%{api_key: "mysecretpassword", api_user: "foo@example.com"})
+{ :ok, message } = ExGrid.Message.new([to: "bar@example.com", subject: "hello world", from: "foo@example.com"])
 
 {code, body} = ExGrid.Mail.send(creds, message)
 code #=> 200
