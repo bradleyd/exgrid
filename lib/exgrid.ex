@@ -2,7 +2,7 @@ defmodule ExGrid do
   defstruct [:api_key, :api_user]
 
   @doc """
-  validate credentials
+  Validate credentials
   Sendgrid API needs a user and key to authenticate
   %{api_key: key, api_user: user}
   """

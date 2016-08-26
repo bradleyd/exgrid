@@ -3,7 +3,7 @@ defmodule ExGrid.Mixfile do
 
   def project do
     [app: :exgrid,
-      version: "0.3.0",
+      version: "0.4.0",
       elixir: "~> 1.2",
       description: description,
       package: package,
@@ -14,7 +14,7 @@ defmodule ExGrid.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:httpotion]]
+    [applications: [:httpotion, :timex]]
   end
 
   defp deps do

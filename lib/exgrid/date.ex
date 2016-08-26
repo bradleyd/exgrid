@@ -10,7 +10,7 @@ defmodule ExGrid.Date do
   Uses YYYY-M-D format by default.
   """
   def parse_date(date, format \\ "{YYYY}-{M}-{D}") do
-    {:ok, _sdate} = DateFormat.parse(date, format)
+    {:ok, _sdate} = Timex.parse(date, format)
   end
 
   @doc """
@@ -20,11 +20,11 @@ defmodule ExGrid.Date do
    * `1`  -- the first date comes after the second one
   """
   def compare_dates(%DateTime{} = first_date, %DateTime{} = second_date) do
-    Date.compare(first_date, second_date)
+    Timex.compare(first_date, second_date)
   end
   def compare_dates(first_date, second_date, format \\ "{YYYY}-{M}-{D}") do
-    {:ok, first_date} = DateFormat.parse(first_date, format)
-    {:ok, second_date} = DateFormat.parse(second_date, format)
-    Date.compare(first_date, second_date)
+    {:ok, first_date}  = Timex.parse(first_date, format)
+    {:ok, second_date} = Timex.parse(second_date, format)
+    Timex.compare(first_date, second_date)
   end
 end

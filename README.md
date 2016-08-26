@@ -16,7 +16,7 @@ In order to install it via hex, add `exgrid` and `ibrowse` package into the deps
 ```elixir
   defp deps do
     [
-      {:exgrid, "~> 0.2.3"}
+      {:exgrid, "~> 0.4"}
     ]
   end
 ```
@@ -29,7 +29,7 @@ Send an email
 
 ```elixir
 { :ok, creds } = ExGrid.credentials(%{api_key: key, api_user: user})
-{ :ok, message } = ExGrid.Message.new([to: 'foo@example.com', subject: 'hello world', from: 'me@mysefandi.com'])
+{ :ok, message } = ExGrid.Message.new([to: "foo@example.com", subject: "hello world", from: "me@mysefandi.com"])
 
 {code, body} = ExGrid.Mail.send(creds, message)
 code #=> 200
@@ -47,8 +47,8 @@ IO.inspect body #=>
 [#HashDict<[{"first_name", "John"}, {"username", "foo@fakedomain.com"}, {"website_access", "true"}, {"phone", "123456789"}, {"state", "CO"}, {"last_name", "Doe"}, {"address2", ""}, {"city", "Denver"}, {"email", "foo@fakedomain.com"}, {"website", "http://sendgrid.com"}, {"country", "US"}, {"active", "true"}, {"zip", "80020"}, {"address", "123 main st"}]>]
 ```
 
-Set a profile attribute 
- 
+Set a profile attribute
+
 ```elixir
 {200, body} = ExGrid.Profile.set(creds, %{address: "456 Main st"})
 IO.inspect body #=> #HashDict<[{"message", "success"}]>
@@ -57,7 +57,7 @@ IO.inspect body #=> #HashDict<[{"message", "success"}]>
 #### Bounces
 
 [Please see docs for all parameters](https://sendgrid.com/docs/API_Reference/Web_API/bounces.html)
- 
+
 ```elixir
 {200, body} = ExGrid.Bounces.get(creds)
 ```
@@ -70,12 +70,12 @@ IO.inspect body #=> #HashDict<[{"message", "success"}]>
 remove bounces
 
 ```elixir
-{200, body} = ExGrid.Bounces.remove(creds, %{type: "soft"}) 
+{200, body} = ExGrid.Bounces.remove(creds, %{type: "soft"})
 IO.inspect body #=> {"message", "success"}
 ```
 
 ```elixir
-{200, body} = ExGrid.Bounces.remove(creds, %{email: "foobarbazwoot@nowhereland.biz"}) 
+{200, body} = ExGrid.Bounces.remove(creds, %{email: "foobarbazwoot@nowhereland.biz"})
 IO.inspect body #=> {"message", "success"}
 ```
 
@@ -88,7 +88,7 @@ IO.inspect body #=> {"count", "4"}
 
 #### Blocks
 [Please see docs for all parameters](https://sendgrid.com/docs/API_Reference/Web_API/blocks.html)
- 
+
 ```elixir
 {200, body} = ExGrid.Blocks.get(creds)
 ```
@@ -103,7 +103,7 @@ remove blocks
 * only parameter accepted is `email`
 
 ```elixir
-{200, body} = ExGrid.Blocks.remove(creds, %{email: "foobarbazwoot@nowhereland.biz"}) 
+{200, body} = ExGrid.Blocks.remove(creds, %{email: "foobarbazwoot@nowhereland.biz"})
 IO.inspect body #=> {"message", "success"}
 ```
 
@@ -116,7 +116,7 @@ IO.inspect body #=> {"count", "4"}
 
 #### Statistics
 [Please see docs for all parameters](https://sendgrid.com/docs/API_Reference/Web_API/Statistics.html)
- 
+
 ```elixir
 {200, body} = ExGrid.Statistics.get(creds)
 IO.inspect body #=>
@@ -162,6 +162,8 @@ You can even get aggregate stats
 ### Tests
 You must supply your credentials as environment vars to run tests.
 
+* This is a WIP
+
 ```bash
-API_KEY="secret" API_USER="foo@example.com" mix test test
+API_KEY="secret" API_USER="foo@example.com" mix test
 ```
