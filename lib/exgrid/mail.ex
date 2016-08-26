@@ -35,6 +35,6 @@ defmodule ExGrid.Mail do
 
   defp cleanup_name(nil), do: nil
   defp cleanup_name(name) do
-    name |> String.strip ?"
+    name |> String.strip(?")
   end
 end

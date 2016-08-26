@@ -16,7 +16,6 @@ In order to install it via hex, add `exgrid` and `ibrowse` package into the deps
 ```elixir
   defp deps do
     [
-      {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.0"},
       {:exgrid, "~> 0.2.3"}
     ]
   end
