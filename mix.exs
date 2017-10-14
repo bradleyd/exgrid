@@ -5,9 +5,9 @@ defmodule ExGrid.Mixfile do
     [app: :exgrid,
       version: "0.4.0",
       elixir: "~> 1.2",
-      description: description,
-      package: package,
-      deps: deps]
+      description: description(),
+      package: package(),
+      deps: deps()]
   end
 
   # Configuration for the OTP application
