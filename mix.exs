@@ -23,7 +23,7 @@ defmodule ExGrid.Mixfile do
       {:ibrowse, "~> 4.2"},
       {:httpotion, "~> 1.0.0"},
       {:json, "~> 0.3.2"},
-      {:timex, "~> 2.2"}
+      {:timex, "~> 3.0"}
     ]
   end
 

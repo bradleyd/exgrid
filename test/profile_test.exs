@@ -6,17 +6,17 @@ defmodule ExGrid.ProfileTest do
   end
 
   test "profile has username" do
-    {:ok, creds} = credentials
+    {:ok, creds} = credentials()
     assert {200, body} = ExGrid.Profile.get(creds)
     profile = Enum.at(body, 0)
-    assert Dict.has_key?(profile, "username")
+    assert Map.has_key?(profile, "username")
   end
 
   test "set profile address" do
-    {:ok, creds} = credentials
+    {:ok, creds} = credentials()
     assert {200, body} = ExGrid.Profile.get(creds)
     profile = Enum.at(body, 0)
-    assert {200, body} = ExGrid.Profile.set(creds, %{address: Dict.get(profile, "address")})
-    assert Dict.get(body, "message") == "success"
+    assert {200, body} = ExGrid.Profile.set(creds, %{address: Map.get(profile, "address")})
+    assert Map.get(body, "message") == "success"
   end
 end
