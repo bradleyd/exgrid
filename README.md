@@ -30,7 +30,7 @@ In order to install it via hex, add `exgrid` and `ibrowse` package into the deps
 
 #### Send an email
 
-* ExGrid.Mail.send requires a credential Map and a message Map
+* `ExGrid.Message.new` requires a `text` and/or `html` body
 
 ```elixir
 {:ok, creds }   = ExGrid.credentials(%{api_key: "mysecretpassword", api_user: "foo@example.com"})
