@@ -6,13 +6,13 @@ ExGrid
 
 Elixir library to interact with [Sendgrid's V2 Web API](https://sendgrid.com/docs/API_Reference/Web_API/index.html)
 
-### This is a WIP, YMMV
+#### This is a WIP, YMMV
 
-### Upgrading from `0.4.0` to `1.0.0`
+## Upgrading from `0.4.0` to `1.0.0`
 
 The reason the version got bumped to `1.0.0` is because I replaced all traces of `Dict` with `Map`.  A lot of the functions returned a `Dict` and this may break some folks code.
 
-There are some other changes to deps versions which may be an issue in your application as well.  If this is the case, stay with `0.X` branch.  I will try to keep `0.X` up to date as best I can for these reasons.  However, there will not be any new dev time for the `0.X` series.  Only bug fixes.
+There are some other changes to dep versions which may be an issue in your application as well.  If this is the case, stay with `0.X` branch.  I will try to keep `0.X` up to date as best I can for these reasons.  However, there will not be any new dev time for the `0.X` series.  Only bug fixes.
 
 ## Installation
 
@@ -28,11 +28,9 @@ In order to install it via hex, add `exgrid` and `ibrowse` package into the deps
 
 ## Quick Start
 
-Send an email
+#### Send an email
 
-#### ExGrid.Mail.send requires a credential Map and a message Map
-
-* Note api_user and api_key must contain those keys or you will get a match error
+* ExGrid.Mail.send requires a credential Map and a message Map
 
 ```elixir
 {:ok, creds }   = ExGrid.credentials(%{api_key: "mysecretpassword", api_user: "foo@example.com"})
@@ -46,7 +44,8 @@ Send an email
 ## Usage
 
 #### Profile
-Get your profile
+
+###### Get your profile
 
 ```elixir
 {200, body } = ExGrid.Profile.get(creds)
@@ -54,7 +53,7 @@ IO.inspect body #=>
 [%{"first_name", "John"}, {"username", "foo@fakedomain.com"}, {"website_access", "true"}, {"phone", "123456789"}, {"state", "CO"}, {"last_name", "Doe"}, {"address2", ""}, {"city", "Denver"}, {"email", "foo@fakedomain.com"}, {"website", "http://sendgrid.com"}, {"country", "US"}, {"active", "true"}, {"zip", "80020"}, {"address", "123 main st"}]
 ```
 
-##### Set a profile attribute
+###### Set a profile attribute
 
 ```elixir
 {200, body} = ExGrid.Profile.set(creds, %{address: "456 Main st"})
@@ -74,7 +73,7 @@ IO.inspect body #=> %{"message", "success"}
 {200, body} = ExGrid.Bounces.get(creds, %{date: 1})
 ```
 
-##### Remove bounces
+###### Remove bounces
 
 ```elixir
 {200, body} = ExGrid.Bounces.remove(creds, %{type: "soft"})
@@ -86,7 +85,7 @@ IO.inspect body #=> {"message", "success"}
 IO.inspect body #=> {"message", "success"}
 ```
 
-You can even get bounce counts
+###### You can even get bounce counts
 
 ```elixir
 {200, body} = ExGrid.Bounces.count(creds)
@@ -105,7 +104,7 @@ IO.inspect body #=> {"count", "4"}
 {200, body} = ExGrid.Blocks.get(creds, %{date: 1})
 ```
 
-remove blocks
+###### Remove blocks
 
 * only parameter accepted is `email`
 
@@ -114,7 +113,7 @@ remove blocks
 IO.inspect body #=> {"message", "success"}
 ```
 
-You can even get block counts
+###### You can even get block counts
 
 ```elixir
 {200, body} = ExGrid.Blocks.count(creds)
@@ -150,24 +149,25 @@ IO.inspect body #=>
 
 ```
 
-##### Number of days in the past to include statistics (Includes today)
+###### Number of days in the past to include statistics (Includes today)
 
 ```elixir
 {200, body} = ExGrid.Statistics.get(creds, %{days: 1})
 ```
 
-##### List all categories
+###### List all categories
+
 ```elixir
 {200, body} = ExGrid.Statistics.categories(creds)
 ```
 
-##### You can even get aggregate stats
+###### You can even get aggregate stats
 
 ```elixir
 {200, body} = ExGrid.Statistics.get(creds, %{aggregate: 1})
 ```
 
-### Tests
+#### Tests
 
 The tests are a unit style and do not go out and hit SendGrid.
 
