@@ -20,7 +20,7 @@ defmodule ExGrid.HTTPHandler do
   """
   def get(_, url), do: get(url)
   def get(url) do
-    response = HTTPotion.get(url, set_headers)
+    response = HTTPotion.get(url, set_headers())
     {_, body} =  parse_body(response.body)
     { response.status_code, body }
   end
@@ -30,7 +30,7 @@ defmodule ExGrid.HTTPHandler do
   """
   def post(_, url, payload), do: post(url, payload)
   def post(url, payload) do
-    response = HTTPotion.post(url, payload, set_headers, [])
+    response = HTTPotion.post(url, payload, set_headers(), [])
     {_, body} =  parse_body(response.body)
     {response.status_code, body}
   end
@@ -39,8 +39,8 @@ defmodule ExGrid.HTTPHandler do
   Build headers
   """
   def set_headers do
-    HashDict.new
-    |> HashDict.put(:"content-type", "application/x-www-form-urlencoded")
+    Map.new
+    |> Map.put(:"content-type", "application/x-www-form-urlencoded")
   end
 
   @doc """

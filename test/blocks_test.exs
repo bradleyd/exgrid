@@ -2,7 +2,6 @@ defmodule ExGrid.BlocksTest do
   use ExUnit.Case
 
   # TODO build better integration tests for blocks
-
   setup do
     now = Timex.now
     start_date = Timex.format!(now, "{YYYY}-{M}-{D}")
@@ -71,15 +70,14 @@ defmodule ExGrid.BlocksTest do
     assert {:error, "Start date is older than end date"} = ExGrid.Blocks.get(creds, %{start_date: "2014-07-20", end_date: "2013-09-10"})
   end
 
+  # Require actual calls to SendGrid..kinda pointless.  Only proves that their V2 API contract did not change
   test "returns block count" do
     {:ok, creds} = credentials()
-    assert {200, body} = ExGrid.Blocks.count(creds)
-    assert Map.has_key?(body, "count")
+    assert {200, _body} = ExGrid.Blocks.count(creds)
   end
 
   test "remove block" do
     {:ok, creds} = credentials()
-    assert {200, body} = ExGrid.Blocks.remove(creds, %{email: "foo@bar.com"})
-    assert {"message", "Email does not exist"} == Enum.at(body,0)
+    assert {200, _body} = ExGrid.Blocks.remove(creds, %{email: "foo@bar.com"})
   end
 end

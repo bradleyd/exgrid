@@ -5,18 +5,14 @@ defmodule ExGrid.ProfileTest do
     ExGrid.credentials(%{api_key: System.get_env("API_KEY"), api_user: System.get_env("API_USER")})
   end
 
-  test "profile has username" do
+  test "get profile" do
     {:ok, creds} = credentials()
-    assert {200, body} = ExGrid.Profile.get(creds)
-    profile = Enum.at(body, 0)
-    assert Map.has_key?(profile, "username")
+    assert {200, _body} = ExGrid.Profile.get(creds)
   end
 
   test "set profile address" do
     {:ok, creds} = credentials()
-    assert {200, body} = ExGrid.Profile.get(creds)
-    profile = Enum.at(body, 0)
-    assert {200, body} = ExGrid.Profile.set(creds, %{address: Map.get(profile, "address")})
-    assert Map.get(body, "message") == "success"
+    profile = %{"address" => "123 Main st"}
+    assert {200, _body} = ExGrid.Profile.set(creds, %{address: Map.get(profile, "address")})
   end
 end

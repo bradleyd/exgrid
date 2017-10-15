@@ -7,20 +7,17 @@ defmodule ExGrid.StatsTest do
 
   test "it gets all stats" do
     {:ok, creds} = credentials()
-    assert {200, body} = ExGrid.Statistics.get(creds)
-    assert Map.has_key?(Enum.at(body,0), "date")
+    assert {200, _body} = ExGrid.Statistics.get(creds)
   end
 
   test "stats filters via days parameter" do
     {:ok, creds} = credentials()
-    assert {200, body} = ExGrid.Statistics.get(creds, %{days: 1})
-    assert Map.has_key?(Enum.at(body,0), "date")
+    assert {200, _body} = ExGrid.Statistics.get(creds, %{days: 1})
   end
 
   test "stats filters via aggregate" do
     {:ok, creds} = credentials()
-    assert {200, body} = ExGrid.Statistics.get(creds, %{aggregate: 1})
-    assert Map.has_key?(body, "delivered")
+    assert {200, _body} = ExGrid.Statistics.get(creds, %{aggregate: 1})
   end
 
   test "fetches all the categories" do

@@ -1,7 +1,8 @@
 defmodule ExGrid.Statistics do
   import ExGrid.Date
   import ExGrid.API
-  alias ExGrid.HTTPHandler
+
+  @http_handler Application.get_env(:exgrid, :http_handler)
 
   @moduledoc """
   Fetch statistics
@@ -11,14 +12,14 @@ defmodule ExGrid.Statistics do
   get all stats
   """
   def get(credentials) do
-    {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials))
+    {_code, _body} = @http_handler.post(credentials, build_url("stats", "get"), build_form_data(credentials))
   end
   
   @doc """
   get all categories
   """
   def categories(credentials) do
-    {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{list: true}))
+    {_code, _body} = @http_handler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{list: true}))
   end
 
 
@@ -42,7 +43,7 @@ defmodule ExGrid.Statistics do
     result = compare_dates(sdate, edate)
     case result do
       -1 ->
-        {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{start_date: start_date, end_date: end_date}))
+        {_code, _body} = @http_handler.post(credentials, build_url("stats", "get"), build_form_data(credentials, %{start_date: start_date, end_date: end_date}))
       0 ->
         {:error, "Dates are the same"}
       1 ->
@@ -53,13 +54,13 @@ defmodule ExGrid.Statistics do
   def get(credentials, %{start_date: _start_date}=sdate) do
     cond do
       {:ok, _start_date} = parse_date(sdate.start_date) ->
-        {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, sdate))
+        {_code, _body} = @http_handler.post(credentials, build_url("stats", "get"), build_form_data(credentials, sdate))
       {:error, _start_date} =  parse_date(sdate.start_date) ->
         {:error, "Start date is older than end date"}   
     end 
   end
 
   def get(credentials, optional_parameters) when is_map(optional_parameters) do
-    {_code, _body} = HTTPHandler.post(credentials, build_url("stats", "get"), build_form_data(credentials, optional_parameters))
+    {_code, _body} = @http_handler.post(credentials, build_url("stats", "get"), build_form_data(credentials, optional_parameters))
   end
 end

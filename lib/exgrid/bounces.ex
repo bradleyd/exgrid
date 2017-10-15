@@ -1,7 +1,8 @@
 defmodule ExGrid.Bounces do
   import ExGrid.Date
   import ExGrid.API
-  alias ExGrid.HTTPHandler
+
+  @http_handler Application.get_env(:exgrid, :http_handler)
 
   @moduledoc """
   Manage bounces
@@ -11,7 +12,7 @@ defmodule ExGrid.Bounces do
   get all bounces
   """
   def get(credentials) do
-    {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials))
+    {_code, _body} = @http_handler.get(credentials, build_url("bounces", "get", credentials))
   end
 
   @doc """
@@ -34,7 +35,7 @@ defmodule ExGrid.Bounces do
     result = compare_dates(sdate, edate)
     case result do
       -1 ->
-        {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials, %{start_date: start_date, end_date: end_date}))
+        {_code, _body} = @http_handler.get(credentials, build_url("bounces", "get", credentials, %{start_date: start_date, end_date: end_date}))
       0 ->
         {:error, "Dates are the same"}
       1 ->
@@ -45,21 +46,21 @@ defmodule ExGrid.Bounces do
   def get(credentials, %{start_date: _start_date}=sdate) do
     cond do
       {:ok, _start_date} = parse_date(sdate.start_date) ->
-        {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials, sdate))
+        {_code, _body} = @http_handler.get(credentials, build_url("bounces", "get", credentials, sdate))
       {:error, _start_date} =  parse_date(sdate.start_date) ->
         {:error, "Start date is older than end date"}   
     end 
   end
 
   def get(credentials, optional_parameters) when is_map(optional_parameters) do
-    {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "get", credentials, optional_parameters))
+    {_code, _body} = @http_handler.get(credentials, build_url("bounces", "get", credentials, optional_parameters))
   end
 
   @doc """
   get bounce count
   """
   def count(credentials) do
-    {_code, _body} = HTTPHandler.get(credentials, build_url("bounces", "count", credentials))
+    {_code, _body} = @http_handler.get(credentials, build_url("bounces", "count", credentials))
   end
 
   @doc """
@@ -72,6 +73,6 @@ defmodule ExGrid.Bounces do
   iex> ExGrid.Bounces.remove(credentials, %{type: "soft"})
   """
   def remove(credentials, optional_parameters) when is_map(optional_parameters) do
-    {_code, _body} = HTTPHandler.post(credentials, build_url("bounces", "delete"), build_form_data(credentials, optional_parameters))
+    {_code, _body} = @http_handler.post(credentials, build_url("bounces", "delete"), build_form_data(credentials, optional_parameters))
   end
 end
