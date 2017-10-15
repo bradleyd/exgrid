@@ -12,10 +12,10 @@ defmodule ExGrid.Test.HTTPHandler do
   end
 
   @doc """
-  Performs POST request
+  Performs Mock POST request
   """
   def post(_, url, payload), do: post(url, payload)
-  def post(url, _payload) do
+  def post(_url, _payload) do
     { 200, %{}}
   end
 

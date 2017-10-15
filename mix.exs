@@ -21,8 +21,8 @@ defmodule ExGrid.Mixfile do
     [
       {:ex_doc, "~> 0.12", only: :dev},
       {:ibrowse, "~> 4.2"},
-      {:httpotion, "~> 1.0.0"},
-      {:json, "~> 0.3.2"},
+      {:httpotion, "~> 3.0"},
+      {:json, "~> 1.0"},
       {:timex, "~> 3.0"}
     ]
   end

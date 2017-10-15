@@ -20,7 +20,7 @@ defmodule ExGrid.HTTPHandler do
   """
   def get(_, url), do: get(url)
   def get(url) do
-    response = HTTPotion.get(url, set_headers())
+    response = HTTPotion.get(url, options())
     {_, body} =  parse_body(response.body)
     { response.status_code, body }
   end
@@ -30,7 +30,7 @@ defmodule ExGrid.HTTPHandler do
   """
   def post(_, url, payload), do: post(url, payload)
   def post(url, payload) do
-    response = HTTPotion.post(url, payload, set_headers(), [])
+    response = HTTPotion.post(url, options(payload))
     {_, body} =  parse_body(response.body)
     {response.status_code, body}
   end
@@ -38,9 +38,18 @@ defmodule ExGrid.HTTPHandler do
   @doc """
   Build headers
   """
-  def set_headers do
-    Map.new
-    |> Map.put(:"content-type", "application/x-www-form-urlencoded")
+  def headers do
+    ["Content-Type": "application/x-www-form-urlencoded"]
+  end
+
+  @doc """
+  Build options list for HTTP
+  """
+  def options do
+     [headers: headers(), ibrowse: [max_pipeline_size: 15, max_sessions: 15]]
+  end
+  def options(payload) do
+    [body: payload, headers: headers(), ibrowse: [max_pipeline_size: 15, max_sessions: 15]]
   end
 
   @doc """
