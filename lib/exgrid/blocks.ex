@@ -1,7 +1,8 @@
 defmodule ExGrid.Blocks do
   import ExGrid.Date
   import ExGrid.API
-  alias ExGrid.HTTPHandler
+
+  @http_handler Application.get_env(:exgrid, :http_handler)
 
   @moduledoc """
   Manage blocks
@@ -11,7 +12,7 @@ defmodule ExGrid.Blocks do
   get all blocks
   """
   def get(credentials) do
-    {_code, _body} = HTTPHandler.get(credentials, build_url("blocks", "get", credentials))
+    {_code, _body} = @http_handler.get(credentials, build_url("blocks", "get", credentials))
   end
 
   @doc """
@@ -34,7 +35,7 @@ defmodule ExGrid.Blocks do
     result = compare_dates(sdate, edate)
     case result do
       -1 ->
-        {_code, _body} = HTTPHandler.get(credentials, build_url("blocks", "get", credentials, %{start_date: start_date, end_date: end_date}))
+        {_code, _body} = @http_handler.get(credentials, build_url("blocks", "get", credentials, %{start_date: start_date, end_date: end_date}))
       0 ->
         {:error, "Dates are the same"}
       1 ->
@@ -45,21 +46,21 @@ defmodule ExGrid.Blocks do
   def get(credentials, %{start_date: _start_date}=sdate) do
     cond do
       {:ok, _start_date} = parse_date(sdate.start_date) ->
-        {_code, _body} = HTTPHandler.get(credentials, build_url("blocks", "get", credentials, sdate))
+        {_code, _body} = @http_handler.get(credentials, build_url("blocks", "get", credentials, sdate))
       {:error, _start_date} =  parse_date(sdate.start_date) ->
         {:error, "Start date is older than end date"}   
     end 
   end
 
   def get(credentials, optional_parameters) when is_map(optional_parameters) do
-    {_code, _body} = HTTPHandler.get(credentials, build_url("blocks", "get", credentials, optional_parameters))
+    {_code, _body} = @http_handler.get(credentials, build_url("blocks", "get", credentials, optional_parameters))
   end
 
   @doc """
   get block count
   """
   def count(credentials) do
-    {_code, _body} = HTTPHandler.get(credentials, build_url("blocks", "count", credentials))
+    {_code, _body} = @http_handler.get(credentials, build_url("blocks", "count", credentials))
   end
 
   @doc """
@@ -73,6 +74,6 @@ defmodule ExGrid.Blocks do
 
   """
   def remove(credentials, %{email: _email}=parameters) do
-    {_code, _body} = HTTPHandler.post(credentials, build_url("blocks", "delete"), build_form_data(credentials, parameters))
+    {_code, _body} = @http_handler.post(credentials, build_url("blocks", "delete"), build_form_data(credentials, parameters))
   end
 end

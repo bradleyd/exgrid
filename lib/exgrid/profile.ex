@@ -1,9 +1,10 @@
 defmodule ExGrid.Profile do
   import ExGrid.API
-  alias ExGrid.HTTPHandler
+
+  @http_handler Application.get_env(:exgrid, :http_handler)
 
   def get(credentials) do
-    {_code, _body} = HTTPHandler.get(credentials, build_url("profile", "get", credentials))
+    {_code, _body} = @http_handler.get(credentials, build_url("profile", "get", credentials))
   end
 
   @doc """
@@ -29,6 +30,6 @@ defmodule ExGrid.Profile do
   { 200, #HashDict<[{"message", "success"}]>}
   """
   def set(credentials, profile_attributes) do
-    {_code, _body} = HTTPHandler.post(credentials, build_url("profile", "set"), build_form_data(credentials, profile_attributes))
+    {_code, _body} = @http_handler.post(credentials, build_url("profile", "set"), build_form_data(credentials, profile_attributes))
   end
 end

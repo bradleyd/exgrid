@@ -1,9 +1,10 @@
 defmodule ExGrid.Mail do
   import ExGrid.API
-  alias ExGrid.HTTPHandler
+
+  @http_handler Application.get_env(:exgrid, :http_handler)
 
   def send(creds, message) do
-    {_code, _body} = HTTPHandler.post(creds, build_url("mail", "send"), build_mail_form_data(creds, message))
+    {_code, _body} = @http_handler.post(creds, build_url("mail", "send"), build_mail_form_data(creds, message))
   end
 
   defp build_mail_form_data(creds, message) do

@@ -19,6 +19,9 @@ defmodule ExGrid.Date do
    * `0`  -- both arguments represent the same date when coalesced to the same timezone.
    * `1`  -- the first date comes after the second one
   """
+  def compare_dates(%NaiveDateTime{} = first_date,  %NaiveDateTime{} = second_date) do
+    Timex.compare(first_date, second_date)
+  end
   def compare_dates(%DateTime{} = first_date, %DateTime{} = second_date) do
     Timex.compare(first_date, second_date)
   end
